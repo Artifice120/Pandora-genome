@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J busco_contigs
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=1000gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-bigmem
+#SBATCH --error=error/busco.e%j
+#SBATCH --output=log/busco.o%j
+#SBATCH --qos=campus-bigmem
+#SBATCH --exclusive
+
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/RNAseq_Processing/2_Trimmomatic/posttrim_paired/
+
+singularity exec /lustre/isaac/scratch/jtorre28/singularity_containers/funannotate_v1.8.17.sif funannotate  train -i /lustre/isaac/scratch/jtorre28/telomere/pair-ul.fq --left fmt.Spor2_1.trim.fq      fmt.Spor2_1.trim.fq     fmt.Spor3_1.trim.fq     fmt.Spor3_1.trim.fq     fmt.Spor4_1.trim.fq     fmt.Spor4_1.trim.fq     fmt.Spor5_1.trim.fq     fmt.Spor5_1.trim.fq fmt.Myce6_1.trim.fq fmt.Myce7_1.trim.fq     fmt.Myce8_1.trim.fq --right fmt.Myce6_2.trim.fq fmt.Myce7_2.trim.fq     fmt.Myce8_2.trim.fq fmt.Spor2_2.trim.fq fmt.Spor2_2.trim.fq     fmt.Spor3_2.trim.fq     fmt.Spor3_2.trim.fq     fmt.Spor4_2.trim.fq     fmt.Spor4_2.trim.fq     fmt.Spor5_2.trim.fq     fmt.Spor5_2.trim.fq  --jaccard_clip --no_trimmomatic --memory 500G  --coverage 15 --species "pandora" --cpus 45 -o /lustre/isaac/scratch/madler5/blue_pandora_seq/RNAseq_Processing/2_Trimmomatic/posttrim_paired/trainining.out
