@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH -J align_reads
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=100gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=short
+
+#SBATCH --error=error/cover.e%j
+#SBATCH --output=log/cover.o%j
+#SBATCH --qos=short
+#SBATCH --exclusive
+
+eval "$(conda shell.bash hook)"
+
+conda activate /lustre/isaac/scratch/jtorre28/enviro/minimappy
+
+module load samtools/1.14
+
+minimap2 -ax map-ont \
+         -t 40 /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hifiasm/pacbio-ont-sana-hic-1.hic.p_ctg.fa \
+         /lustre/isaac/scratch/jtorre28/telomere/pair-ul.fq \
+ | samtools sort -@40 -O BAM -o /lustre/isaac/scratch/jtorre28/telomere/pandora-cov-all.bam -
