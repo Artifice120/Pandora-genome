@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -J hifiasm
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=1000gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-bigmem
+#SBATCH --error=error/hifiasm.e%j
+#SBATCH --output=log/hifiasm.o%j
+#SBATCH --qos=campus-bigmem
+#SBATCH --exclusive
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hifiasm
+
+./hifiasm -o pacbio-ont-sana-hic-1 -t 48 -l 3 -s 0 --ul /lustre/isaac/scratch/madler5/blue_pandora_seq/basecalling/fastqs/calls-sanatized.fastq.gz --h1 /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1495777/blue-pand-hic_1495777_S3HiC_R1.fastq.gz,/lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1496192/blue-pand-hic_1496192_S3HiC_R1.fastq.gz --h2 /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1495777/blue-pand-hic_1495777_S3HiC_R2.fastq.gz,/lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1496192/blue-pand-hic_1496192_S3HiC_R2.fastq.gz /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta.gz 2> /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/pacbio_ont-sana-hic-1.log
