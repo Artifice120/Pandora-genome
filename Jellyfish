@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH -J jellyscope
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=1000gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=campus-bigmem
+#SBATCH --error=error/jelly.e%j
+#SBATCH --output=log/jelly.o%j
+#SBATCH --qos=campus-bigmem
+#SBATCH --exclusive
+
+source /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/etc/profile.d/micromamba.sh
+
+micromamba activate jellyscope
+
+cd /lustre/isaac/scratch/jtorre28/telomere/
+
+jellyfish count -m 21 -s 100M -t 40 -C /lustre/isaac/scratch/jtorre28/telomere/pair-ul.fq
+
+jellyfish histo -t 30 mer_counts.jf \
+         > /lustre/isaac/scratch/jtorre28/telomere/pair-ul.histo
