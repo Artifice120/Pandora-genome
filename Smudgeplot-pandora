@@ -1,0 +1,34 @@
+#!/bin/bash
+#SBATCH -J smudge
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=120gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=short
+#SBATCH --error=error/smudge-plot.e%j
+#SBATCH --output=log/smudge-plot.o%j
+#SBATCH --qos=short
+#SBATCH --exclusive
+
+source /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/etc/profile.d/micromamba.sh
+
+micromamba activate smudgy
+
+suffix=catted
+
+mer=25
+
+here=/lustre/isaac/scratch/jtorre28/telomere/
+
+low=10
+
+fasta=/lustre/isaac/scratch/jtorre28/telomere/pair-ul.fq
+
+cd $here
+
+FastK -v -T45 -k${mer} -t4 -M16 -N${here}k-${mer}_${suffix}_table $fasta
+
+smudgeplot.py hetmers -L ${low}  -t 24 -o ${mer}-${low}-ont-pacbio1-pairs --verbose k-${mer}_${suffix}_table
+
+smudgeplot.py all -cov_min ${low} -o ${mer}-${low}-musca-run ${mer}-${low}-ont-pacbio1-pairs_text.smu
