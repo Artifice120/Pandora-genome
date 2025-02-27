@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH -J smudge
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=120gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=short
+#SBATCH --error=error/smudge-plot.e%j
+#SBATCH --output=log/smudge-plot.o%j
+#SBATCH --qos=short
+#SBATCH --exclusive
+
+source /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/etc/profile.d/micromamba.sh
+
+micromamba activate fung-blast
+
+cd /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/envs/fung-blast/
+
+fgmp.pl -T 48 -g hifi.fa -o pandora
