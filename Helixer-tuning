@@ -1,0 +1,57 @@
+#!/bin/bash
+#SBATCH -J AI-genes
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=100gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=40
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-gpu
+#SBATCH --error=error/ai-gene.e%j
+#SBATCH --output=log/ai-gene.o%j
+#SBATCH --qos=campus-gpu
+#SBATCH --exclusive
+
+mkdir /lustre/isaac/scratch/jtorre28/pandora-model
+
+cd /lustre/isaac/scratch/jtorre28/pandora-model
+
+path='/lustre/isaac/scratch/jtorre28/pandora-model'
+fasta="/lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hifiasm/pacbio-ont-sana-hic-1.hic.p_ctg.fa"
+gff="/lustre/isaac/scratch/jtorre28/AI-norna-pandora/pandora-norrna.gff"
+species="pandora-fungus"
+prediction=""
+bam=""
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif import2geenuff.py \
+--fasta $fasta \
+--gff3 $gff \
+--db-path ${species}.sqlite3 \
+--log-file ${path}/${species}.log \
+--species $species \
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif \
+geenuff2h5.py --h5-output-path ${species}.h5 \
+--input-db-path ${species}.sqlite3
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif \
+python3 filter-to-most-certain.py --write-by 6415200 \
+--h5-to-filter ${species}.h5 --predictions ${prediction} \
+--keep-fraction 0.2 --output-file filtered.${species}.h5
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif \
+python3 add_ngs_coverage.py \
+-s ${species} --unstranded \
+--bam ${bam} --h5-data filtered.${species}.h5 \
+--threads 45
+
+mkdir ${path}/splitter
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif \
+python3 n90_train_val_split.py --write-by 6415200 \
+--h5-to-split filtered.${species}.h5 --output-pfx splitter/
+
+HybridModel.py -v --batch-size 140 --val-test-batch-size 280 \
+   --class-weights "[0.7, 1.6, 1.2, 1.2]" --transition-weights "[1, 12, 3, 1, 12, 3]" \
+   --predict-phase --learning-rate 0.0001 --resume-training --fine-tune \
+ --load-model-path ${model-to-train} \
+--input-coverage --coverage-norm log --data-dir splitter/ --save-model-path ${path}/tuned-${species}-model.h5
