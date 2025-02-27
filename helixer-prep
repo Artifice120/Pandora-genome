@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -J AI-genes
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=100gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=40
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-gpu
+#SBATCH --error=error/ai-gene.e%j
+#SBATCH --output=log/ai-gene.o%j
+#SBATCH --qos=campus-gpu
+#SBATCH --exclusive
+
+cd /lustre/isaac/scratch/jtorre28/AI-ue-reader
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif fasta2h5.py \
+ --species pandora-0 --h5-output-path pandora-0.h5 --fasta-path /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hifiasm/pacbio-ont-sana-hic-1.hic.p_ctg.fa
+
+singularity exec --nv --env 'RUST_BACKTRACE=full' /lustre/isaac/scratch/jtorre28/singularity_containers/helixer-docker_helixer_v0.3.3_cuda_11.8.0-cudnn8.sif \
+HybridModel.py --load-model-path \
+--test-data pandora-0.h5 --overlap --val-test-batch-size 32 -v --predict-phase
