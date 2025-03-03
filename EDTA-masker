@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -J AI-genes
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=1000gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-bigmem
+#SBATCH --error=error/EDTA.e%j
+#SBATCH --output=log/EDTA.o%j
+#SBATCH --qos=campus-bigmem
+
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/Genome_Annotation/repeat-masking/
+
+singularity exec /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/Genome_Annotation/repeat-masking/edta_2.2.2--hdfd78af_1.sif EDTA.pl --genome  /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hifiasm/pacbio-ont-sana-hic-1.hic.p_ctg.fa --sensitive 1 -t 48 --debug 1 --anno 1
