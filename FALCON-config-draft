@@ -1,0 +1,60 @@
+[General]
+
+pwatcher_type = fs_based
+
+job_type = local
+
+genome_size = 3500000000
+
+seed_coverage = 5
+
+lenngth_cutoff = 1000
+
+use_tmpdir = true
+
+pa_daligner_option = -e.70 -l1000 -s1000
+ovlp_daligner_option = -e.96 -l500 -s1000 -h60
+
+pa_HPCdaligner_option =  -v -B4 -M64
+ovlp_HPCdaligner_option = -v -B4 -M64
+
+
+#list of files of the initial bas.h5 files
+input_fofn = input.fofn
+#input_fofn = preads.fofn
+
+input_type = raw
+#input_type = preads
+
+#The length cutoff used for seed reads usef for pre-assembly
+length_cutoff_pr = 2000
+
+avoid_text_file_busy=false
+
+jobqueue = production
+sge_option_da = -pe smp 8 -q %(jobqueue)s
+sge_option_la = -pe smp 2 -q %(jobqueue)s
+sge_option_pda = -pe smp 8 -q %(jobqueue)s
+sge_option_pla = -pe smp 2 -q %(jobqueue)s
+sge_option_fc = -pe smp 24 -q %(jobqueue)s
+sge_option_cns = -pe smp 8 -q %(jobqueue)s
+
+pa_concurrent_jobs = 3
+ovlp_concurrent_jobs = 3
+
+pa_HPCdaligner_option = -v -B4 -t16 -e.70 -l1000 -s1000
+ovlp_HPCdaligner_option = -v -B4 -t32 -h60 -e.96 -l500 -s1000
+
+pa_DBsplit_option = -x500 -s50
+ovlp_DBsplit_option = -x500 -s50
+
+falcon_sense_option = --output_multi --min_idt 0.70 --min_cov 4 --local_match_count_threshold 2 --max_n_read 200 --n_core 6 --output_dformat
+
+overlap_filtering_setting = --max_diff 100 --max_cov 100 --min_cov 20 --bestn 10 --n_core 24
+
+[job.defaults]
+
+njobs = 30
+
+[job.step.cns]
+njobs = 8
