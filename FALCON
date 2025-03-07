@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH -J falcon
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=120gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=short
+#SBATCH --error=error/falcon.e%j
+#SBATCH --output=log/falcon.o%j
+#SBATCH --qos=short
+#SBATCH --exclusive
+
+source /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/etc/profile.d/micromamba.sh
+
+micromamba activate /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/FALCON-phase/falcon-enviro/
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/FALCON-phase/
+
+fc_run.py fc-pand.cfg
