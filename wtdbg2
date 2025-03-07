@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH -J wtbg
+#SBATCH --account ACF-UTK0011
+#SBATCH --mem=1000gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=24:00:00
+#SBATCH --partition=campus-bigmem
+#SBATCH --error=error/wtbg.e%j
+#SBATCH --output=log/wtdbg.o%j
+#SBATCH --qos=campus-bigmem
+#SBATCH --exclusive
+
+source /lustre/isaac/scratch/jtorre28/enviro/mamba/micro/etc/profile.d/micromamba.sh
+
+micromamba activate /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/wtdbg2/wtdbg2-enviro
+
+reads="/lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta"
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/wtdbg2/
+
+wtdbg2 -i $reads -o pandora-wtd -t 45 -g 3.5g -x sq
