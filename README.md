@@ -74,7 +74,17 @@ Uncertain(bp): 0
 ```
 > BUSCO 
 ```
-
+ -------------------------------------------------------------------------------------------
+    |Results from dataset fungi_odb10                                                          |
+    -------------------------------------------------------------------------------------------
+    |C:81.2%[S:48.9%,D:32.3%],F:1.8%,M:17.0%,n:758,E:7.8%                                      |
+    |616    Complete BUSCOs (C)    (of which 48 contain internal stop codons)                  |
+    |371    Complete and single-copy BUSCOs (S)                                                |
+    |245    Complete and duplicated BUSCOs (D)                                                 |
+    |14    Fragmented BUSCOs (F)                                                               |
+    |128    Missing BUSCOs (M)                                                                 |
+    |758    Total BUSCO groups searched                                                        |
+    -------------------------------------------------------------------------------------------
 ```
 
 # hifi asm assembly stats ( hifi, nanopore )
