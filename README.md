@@ -17,12 +17,12 @@ histogram text file
 jellyfish histo -t 30 mer_counts.jf > /lustre/isaac/scratch/jtorre28/telomere/pair-ul.histo
 ```
 
-21-mer histogram file was then visualozed with Genomescope web browser tool
+21-mer histogram file was then visualized with Genomescope web browser tool
 
 ![image](https://github.com/user-attachments/assets/57134b77-16dd-422c-a0b4-c8da8e092f6b)
 
 
-## Assembly with HiFiasmcd
+## Assembly with HiFiasm
 Oxford nanopore reads, pacbio hifi reads, and pacbio HiC reads were assembled using HiFiasm
 ```
 ./hifiasm -o pacbio-ont-sana-hic-1 -t 48 -l 3 -s 0 --ul /lustre/isaac/scratch/madler5/blue_pandora_seq/basecalling/fastqs/calls-sanatized.fastq.gz --h1 /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1495777/blue-pand-hic_1495777_S3HiC_R1.fastq.gz,/lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1496192/blue-pand-hic_1496192_S3HiC_R1.fastq.gz --h2 /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1495777/blue-pand-hic_1495777_S3HiC_R2.fastq.gz,/lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/hic/blue-pand-hic_1496192/blue-pand-hic_1496192_S3HiC_R2.fastq.gz /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta.gz 2> /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hifiasm/pacbio_ont-sana-hic-1.log
