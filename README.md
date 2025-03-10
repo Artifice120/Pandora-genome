@@ -6,7 +6,7 @@ Sanatized basecalled reads ( removes formatting/parsing errors ) to avoid errors
 ```
 seqkit sana /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/ONT_20241202/calls_2024-12-02_T17-20-58.fastq -o /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/ONT_sanatized/calls-sanatized.fastq
 ```
-Genome size estimation with jellyfish and genomescope
+###Genome size estimation with jellyfish and genomescope
 
 > Jellyfish was used to generate initial k-mer counts and histogram file by concatenating ONT reads and hic reads into a single file
 ```
@@ -20,6 +20,17 @@ jellyfish histo -t 30 mer_counts.jf > /lustre/isaac/scratch/jtorre28/telomere/pa
 21-mer histogram file was then visualized with Genomescope web browser tool
 
 ![image](https://github.com/user-attachments/assets/57134b77-16dd-422c-a0b4-c8da8e092f6b)
+
+### ploidy estimation with smudgeplot
+
+```
+FastK -v -T45 -k25 -t4 -M16 -N /lustre/isaac/scratch/jtorre28/telomere/k-25_catted_table /lustre/isaac/scratch/jtorre28/telomere/pair-ul.fq
+
+smudgeplot.py hetmers -L 10  -t 24 -o 25-10-ont-pacbio1-pairs --verbose k-25_catted_table
+
+smudgeplot.py all -cov_min ${low} -o 25-10-musca-run 25-10-ont-pacbio1-pairs_text.smu
+```
+![image](https://github.com/user-attachments/assets/336895f2-d74a-43ea-9277-504d4f59e72c)
 
 
 ## Assembly with HiFiasm
