@@ -53,5 +53,44 @@ hifi reads were also assembled with hicanu to merge later with quickmerge
 canu -p pandora-hi -d /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hicanu genomeSize=3500m utgReAlign=true overlapper=mhap -pacbio-hifi /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta.gz usegrid=false
 ```
 
+# hifi asm assembly stats (hifi, hi-c, naopore)
+
+```
+Sample: pacbio-ont-sana-hic-1.hic.p_ctg.fa
+Genome(bp): 6383641050
+Contigs: 11358
+GC(%): 30.68
+A(%): 34.65
+T(%): 34.65
+G(%): 15.34
+C(%): 15.34
+N50: 1140464
+Max Contig: 7270666
+Min Contig: 47014
+N count: 0
+N(%): 0
+Gap(-): 0
+Uncertain(bp): 0
+```
+> BUSCO 
+```
+
+```
+
+# hifi asm assembly stats ( hifi, nanopore )
+
+```
+Sample: pacbio-ont-1.bp.p_ctg.fa
+Genome(bp): 6382251181
+Contigs: 11354
+GC(%): 30.68
+A(%): 34.65
+T(%): 34.65
+G(%): 15.34
+C(%): 15.34
+N50: 1146846
+Max Contig: 7270666
+Min Contig: 2046
+```
 
 
