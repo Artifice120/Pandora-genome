@@ -6,7 +6,7 @@ Sanatized basecalled reads ( removes formatting/parsing errors ) to avoid errors
 ```
 seqkit sana /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/ONT_20241202/calls_2024-12-02_T17-20-58.fastq -o /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/ONT_sanatized/calls-sanatized.fastq
 ```
-###Genome size estimation with jellyfish and genomescope
+### Genome size estimation with jellyfish and genomescope
 
 > Jellyfish was used to generate initial k-mer counts and histogram file by concatenating ONT reads and hic reads into a single file
 ```
