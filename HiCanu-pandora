@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH -J hicanu
+#SBATCH --account ACF-UTK0011
+##SBATCH --mem=100gb
+#SBATCH --nodes=1
+#SBATCH --ntasks=48
+#SBATCH --time=03:00:00
+#SBATCH --partition=short
+#SBATCH --error=error/pand-hi.%j
+#SBATCH --output=log/pand-hi.%j
+#SBATCH --qos=short
+#SBATCH --exclusive
+
+cd /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/
+
+module load canu
+
+canu -p pandora-hi -d /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hicanu genomeSize=3500m utgReAlign=true overlapper=mhap -pacbio-hifi /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta.gz usegrid=false
