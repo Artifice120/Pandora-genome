@@ -102,6 +102,41 @@ N50: 1146846
 Max Contig: 7270666
 Min Contig: 2046
 ```
+# HiCanu Assembly stats
+
+```
+Sample: /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/hicanu/pandora-hi.contigs.fasta
+Genome(bp): 9347308256
+Contigs: 57306
+GC(%): 30.69
+A(%): 34.65
+T(%): 34.65
+G(%): 15.35
+C(%): 15.33
+N50: 316961
+Max Contig: 59563
+Min Contig: 15227
+N count: 0
+N(%): 0
+Gap(-): 0
+Uncertain(bp): 0
+```
+> HiCanu BUSCO
+```
+
+    -------------------------------------------------------------------------------------------
+    |Results from dataset fungi_odb10                                                          |
+    -------------------------------------------------------------------------------------------
+    |C:81.8%[S:9.4%,D:72.4%],F:1.7%,M:16.5%,n:758,E:7.3%                                       |
+    |620    Complete BUSCOs (C)    (of which 45 contain internal stop codons)                  |
+    |71    Complete and single-copy BUSCOs (S)                                                 |
+    |549    Complete and duplicated BUSCOs (D)                                                 |
+    |13    Fragmented BUSCOs (F)                                                               |
+    |125    Missing BUSCOs (M)                                                                 |
+    |758    Total BUSCO groups searched                                                        |
+    -------------------------------------------------------------------------------------------
+```
+
 # Telo search results (by rank)
 
 ```
