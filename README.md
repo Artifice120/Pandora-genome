@@ -46,6 +46,43 @@ hifi reads were also assembled with wtdbg2 to merge later with quickmerge
 wtdbg2 -i /lustre/isaac/scratch/madler5/blue_pandora_seq/gDNA_pacbio_ONT/PacBio_Hifi_20250103/blue_pand_pacbio.fasta -o pandora-wtd -t 45 -g 3.5g -x sq
 ```
 
+> BUSCO of wtdbg 
+
+```
+# BUSCO version is: 5.7.1
+# The lineage dataset is: fungi_odb10 (Creation date: 2024-01-08, number of genomes: 549, number of BUSCOs: 758)
+# Summarized benchmarking in BUSCO notation for file /lustre/isaac/scratch/madler5/blue_pandora_seq/Genome_Assembly/wtdbg2/ccs/pandora-wtd.ctg.fa
+# BUSCO was run in mode: euk_genome_min
+# Gene predictor used: miniprot
+
+        ***** Results: *****
+
+        C:80.6%[S:68.9%,D:11.7%],F:1.8%,M:17.6%,n:758,E:7.9%
+        611     Complete BUSCOs (C)     (of which 48 contain internal stop codons)
+        522     Complete and single-copy BUSCOs (S)
+        89      Complete and duplicated BUSCOs (D)
+        14      Fragmented BUSCOs (F)
+        133     Missing BUSCOs (M)
+        758     Total BUSCO groups searched
+
+Assembly Statistics:
+        17808   Number of scaffolds
+        17808   Number of contigs
+        6166077574      Total length
+        0.000%  Percent gaps
+        1 MB    Scaffold N50
+        1 MB    Contigs N50
+
+
+Dependencies and versions:
+        hmmsearch: 3.1
+        bbtools: 39.01
+        miniprot_index: 0.13-r248
+        miniprot_align: 0.13-r248
+        python: sys.version_info(major=3, minor=7, micro=12, releaselevel='final', serial=0)
+        busco: 5.7.1
+
+```
 ## Assembly of HiFi reads with HiCanu
 hifi reads were also assembled with hicanu to merge later with quickmerge
 
